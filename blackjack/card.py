@@ -1,3 +1,8 @@
+"""
+This module holds the Card class.
+"""
+
+
 class Card:
     """
     This class allows you to instantiate a card,
