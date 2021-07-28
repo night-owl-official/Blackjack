@@ -22,11 +22,25 @@ class Card:
         self._suit = suit
 
     @property
-    def rank(self):
+    def rank(self) -> str:
+        """
+        Gets the rank of a Card.
+
+        Returns:
+            The rank of a Card.
+        """
+
         return self._rank
 
     @property
-    def suit(self):
+    def suit(self) -> str:
+        """
+        Gets the suit of a Card.
+
+        Returns:
+            The suit of a Card.
+        """
+
         return self._suit
 
     def __str__(self) -> str:
