@@ -28,3 +28,13 @@ class Card:
     @property
     def suit(self):
         return self._suit
+
+    def __str__(self) -> str:
+        """
+        String representation for a Card.
+
+        Returns:
+            A string displaying info about a Card.
+        """
+
+        return f"{self._rank} of {self._suit}"
