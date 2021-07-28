@@ -18,5 +18,13 @@ class Card:
             suit (str): The suit for the card e.g. hearts, diamonds etc.
         """
 
-        self.rank = rank
-        self.suit = suit
+        self._rank = rank
+        self._suit = suit
+
+    @property
+    def rank(self):
+        return self._rank
+
+    @property
+    def suit(self):
+        return self._suit
