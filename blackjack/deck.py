@@ -50,7 +50,9 @@ class Deck:
         Initializes an instance of a Deck object.
         """
 
+        # Instantiates and initializes the list of cards.
         self._cards = []
+        self.init_deck()
 
     @staticmethod
     def change_ace_value_to_eleven():
@@ -78,3 +80,16 @@ class Deck:
         """
 
         return self._cards
+
+    def init_deck(self):
+        """
+        Creates a standard deck of 52 cards for all the ranks and suits.
+
+        Returns:
+            The list of 52 cards in the deck.
+        """
+
+        # Runs a nested loop to add all the ranks for all the suits.
+        for suit in Deck.card_suits:
+            for rank in Deck.card_ranks:
+                self._cards.append(Card(rank, suit))
