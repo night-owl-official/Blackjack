@@ -81,6 +81,19 @@ class Deck:
 
         return self._cards
 
+    def __str__(self) -> str:
+        """
+        Allows for printing the deck of cards.
+
+        Returns:
+            A string containing the list of cards.
+        """
+
+        deck_string = "+++++++++++++++++\n"
+        deck_string += '\n'.join(str(card) for card in self._cards)
+        deck_string += "\n+++++++++++++++++"
+        return deck_string
+
     def init_deck(self):
         """
         Creates a standard deck of 52 cards for all the ranks and suits.
