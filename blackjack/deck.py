@@ -1,6 +1,7 @@
 """
 This module holds the Deck class.
 """
+from blackjack.card import Card
 
 
 class Deck:
@@ -48,7 +49,8 @@ class Deck:
         """
         Initializes an instance of a Deck object.
         """
-        pass
+
+        self._cards = []
 
     @staticmethod
     def change_ace_value_to_eleven():
@@ -65,3 +67,14 @@ class Deck:
         """
 
         Deck.card_values["Ace"] = 1
+
+    @property
+    def cards(self) -> [Card]:
+        """
+        Gets the deck of cards.
+
+         Returns:
+             The deck of cards.
+        """
+
+        return self._cards
