@@ -48,3 +48,20 @@ class Deck:
         """
         Initializes an instance of a Deck object.
         """
+        pass
+
+    @staticmethod
+    def change_ace_value_to_eleven():
+        """
+        Changes the value of the Ace in the dictionary to be 11.
+        """
+
+        Deck.card_values["Ace"] = 11
+
+    @staticmethod
+    def change_ace_value_to_one():
+        """
+        Changes the value of the Ace in the dictionary to be 1.
+        """
+
+        Deck.card_values["Ace"] = 1
