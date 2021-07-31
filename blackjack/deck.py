@@ -1,6 +1,8 @@
 """
 This module holds the Deck class.
 """
+from random import shuffle
+
 from blackjack.card import Card
 
 
@@ -106,3 +108,10 @@ class Deck:
         for suit in Deck.card_suits:
             for rank in Deck.card_ranks:
                 self._cards.append(Card(rank, suit))
+
+    def shuffle(self):
+        """
+        Shuffles the deck of cards.
+        """
+
+        shuffle(self._cards)
