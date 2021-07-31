@@ -2,6 +2,7 @@
 This module holds the Deck class.
 """
 from random import shuffle
+from typing import Optional
 
 from blackjack.card import Card
 
@@ -115,3 +116,18 @@ class Deck:
         """
 
         shuffle(self._cards)
+
+    def deal_card(self) -> Optional[Card]:
+        """
+        Removes the last Card object from the cards list.
+
+        Returns:
+             The last Card object in the cards list
+             or None if the list is empty.
+        """
+
+        # Can't deal cards if the deck is empty
+        if len(self._cards) <= 0:
+            return None
+
+        return self._cards.pop()
