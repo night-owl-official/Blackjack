@@ -30,6 +30,19 @@ class Hand:
 
         return self._cards
 
+    def __str__(self) -> str:
+        """
+        Allows to print out a hand of cards
+
+        Returns:
+            The string displaying all the cards in hand
+        """
+
+        hand_string = "=================\n"
+        hand_string += '\n'.join(str(card) for card in self._cards)
+        hand_string += "\n================="
+        return hand_string
+
     def hit(self, card: Card):
         """
         Adds a new card to the list of cards in the hand
