@@ -17,7 +17,7 @@ class Hand:
         Initializes an instance of the Hand class.
         """
 
-        self._cards = cards
+        self._cards = list(cards)
 
     @property
     def cards(self) -> Sequence[Card]:
@@ -29,3 +29,13 @@ class Hand:
         """
 
         return self._cards
+
+    def hit(self, card: Card):
+        """
+        Adds a new card to the list of cards in the hand
+
+        Parameters:
+            card (Card): The card to add to the hand
+        """
+
+        self._cards.append(card)
