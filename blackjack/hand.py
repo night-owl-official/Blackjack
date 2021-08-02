@@ -52,3 +52,10 @@ class Hand:
         """
 
         self._cards.append(card)
+
+    def clear(self):
+        """
+        Removes all cards from a hand
+        """
+
+        self._cards.clear()
