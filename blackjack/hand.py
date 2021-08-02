@@ -1,6 +1,9 @@
 """
 This module holds the Hand class
 """
+from collections import Sequence
+
+from blackjack.card import Card
 
 
 class Hand:
@@ -9,9 +12,20 @@ class Hand:
     which is what the players and the dealer use to play blackjack.
     """
     
-    def __init__(self):
+    def __init__(self, cards: Sequence[Card]):
         """
         Initializes an instance of the Hand class.
         """
 
-        pass
+        self._cards = cards
+
+    @property
+    def cards(self) -> Sequence[Card]:
+        """
+        Gets all the cards in the hand
+
+        Returns:
+            The list of cards in hand
+        """
+
+        return self._cards
