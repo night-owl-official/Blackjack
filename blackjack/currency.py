@@ -64,3 +64,10 @@ class Currency:
         # If the player bets more than they have available
         # they will go all in, however, they can only bet as much as they own
         self._tokens_bet = bet_amount if (bet_amount < self._total_tokens) else self._total_tokens
+
+    def reset_bet(self):
+        """
+        Resets the tokens bet to zero
+        """
+
+        self._tokens_bet = 0
