@@ -52,3 +52,15 @@ class Currency:
         """
 
         return f"You have {self._total_tokens} tokens left.\nYour current bet is {self._tokens_bet} tokens."
+
+    def bet(self, bet_amount: int):
+        """
+        Sets the current bet amount of tokens
+
+        Parameters:
+            bet_amount (int): The amount of tokens to bet
+        """
+
+        # If the player bets more than they have available
+        # they will go all in, however, they can only bet as much as they own
+        self._tokens_bet = bet_amount if (bet_amount < self._total_tokens) else self._total_tokens
