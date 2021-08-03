@@ -79,3 +79,11 @@ class Currency:
 
         self._total_tokens += self._tokens_bet
         self.reset_bet()
+
+    def cash_out(self):
+        """
+        Removes from the total tokens based on the player's bet
+        """
+
+        self._total_tokens -= self._tokens_bet
+        self.reset_bet()
