@@ -42,3 +42,13 @@ class Currency:
         """
 
         return self._tokens_bet
+
+    def __str__(self) -> str:
+        """
+        Allows you to print out a player's currency
+
+        Returns:
+            A string with info on a player's currency
+        """
+
+        return f"You have {self._total_tokens} tokens left.\nYour current bet is {self._tokens_bet} tokens."
