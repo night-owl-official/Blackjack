@@ -52,16 +52,3 @@ class Card:
         """
 
         return f"{self._rank} of {self._suit}"
-
-    def __eq__(self, other) -> bool:
-        """
-        Permits two cards to be compared with each other for equality
-
-        Parameters:
-            other (Card): The other card to compare to
-
-        Returns:
-            True when the two cards are equal, false otherwise
-        """
-
-        return (self._rank == other._rank) and (self._suit == other._suit)
