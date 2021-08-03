@@ -71,3 +71,11 @@ class Currency:
         """
 
         self._tokens_bet = 0
+
+    def cash_in(self):
+        """
+        Adds to the total tokens based on the player's bet
+        """
+
+        self._total_tokens += self._tokens_bet
+        self.reset_bet()
