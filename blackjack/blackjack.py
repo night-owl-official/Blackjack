@@ -2,10 +2,9 @@
 This module contains all the functions necessary for the correct
 functioning of the blackjack game.
 """
-from blackjack.card import Card
+from blackjack.currency import Currency
 from blackjack.deck import Deck
 from blackjack.hand import Hand
-from blackjack.currency import Currency
 
 
 def init_deck() -> Deck:
@@ -129,3 +128,67 @@ def ask_hit_or_stay(hand: Hand, deck: Deck) -> str:
 
         # The user entered some invalid input and is advised to enter the correct one
         print("* You need to enter one of the following: h/hit, s/stay *\n")
+
+
+def count_points(hand: Hand) -> int:
+    """
+    Counts how many points are in a hand
+
+    Parameters:
+        hand (Hand): The hand of cards to count
+
+    Returns:
+        The total points a hand of cards has
+    """
+
+    total_points = 0
+    # Creates a list of all aces in the hand
+    ace_list = [card for card in hand.cards if card.rank == "Ace"]
+
+    # Adds up all the cards that are not aces
+    for card in hand.cards:
+        # Skips aces because they will be counted separately
+        if card.rank == "Ace":
+            continue
+
+        total_points += Deck.card_values[card.rank]
+
+    # There's only one ace in the hand
+    if len(ace_list) == 1:
+        # The total points in the hand without the ace is not more than 10
+        if total_points <= 10:
+            # Ace is valued at 11 points
+            Deck.change_ace_value_to_eleven()
+        else:
+            # Ace is valued at 1 point because the total
+            # already surpasses 10
+            Deck.change_ace_value_to_one()
+
+        # Adds the ace value to the total
+        total_points += Deck.card_values["Ace"]
+    elif len(ace_list) > 1:
+        # There is more than one ace in the hand
+
+        # # The total points in the hand without the aces is not more than 10
+        if total_points <= 10:
+            # First ace is valued at 11 points and added to the total
+            Deck.change_ace_value_to_eleven()
+            total_points += Deck.card_values["Ace"]
+
+            # The remaining aces will all be valued at one
+            # because there can only be one ace valued at 11
+            Deck.change_ace_value_to_one()
+            # Loop starts counting from the second ace
+            # as the first ace has already been counted
+            # and all the aces are added to the total
+            for i in range(1, len(ace_list)):
+                total_points += Deck.card_values["Ace"]
+        else:
+            # The total without aces surpasses 10
+            # therefore all aces will be valued at one
+            # and added to the total
+            Deck.change_ace_value_to_one()
+            for i in range(len(ace_list)):
+                total_points += Deck.card_values["Ace"]
+
+    return total_points
