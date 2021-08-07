@@ -20,3 +20,17 @@ def init_deck() -> Deck:
     d.shuffle()
 
     return d
+
+
+def init_hand(deck: Deck) -> Hand:
+    """
+    Initializes a hand of cards
+
+    Parameters:
+        deck (Deck): The deck of cards
+
+    Returns:
+        The hand of cards
+    """
+
+    return Hand([deck.deal_card(), deck.deal_card()])
