@@ -34,3 +34,17 @@ def init_hand(deck: Deck) -> Hand:
     """
 
     return Hand([deck.deal_card(), deck.deal_card()])
+
+
+def init_currency(starting_tokens=1000) -> Currency:
+    """
+    Initialized the player's tokens to the given amount
+
+    Parameters:
+        starting_tokens (int): The initial amount of tokens the player has
+
+    Returns:
+        The player's tokens
+    """
+
+    return Currency(starting_tokens)
