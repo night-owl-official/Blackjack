@@ -130,6 +130,33 @@ def ask_hit_or_stay(hand: Hand, deck: Deck) -> str:
         print("* You need to enter one of the following: h/hit, s/stay *\n")
 
 
+def dealer_hit_or_stay(hand: Hand, deck: Deck):
+    """
+    Deals cards to the dealer until they reach a score of 17 or higher
+
+    Parameters:
+        hand (Hand): The hand of cards for the dealer
+        deck (Deck): The deck of cards
+    """
+
+    # Counts the dealer's score before starting to deal cards to them
+    current_total = count_points(hand)
+
+    # The dealer can only deal cards to themselves if their score is less than 17
+    while current_total < 17:
+        # Deals a new card
+        new_card = deck.deal_card()
+
+        # Deck can be empty, a check is necessary
+        if not new_card:
+            break
+
+        # Deck isn't empty, therefore hits the dealer's hand
+        # and checks their score after the new card has been dealt
+        hand.hit(new_card)
+        current_total = count_points(hand)
+
+
 def count_points(hand: Hand) -> int:
     """
     Counts how many points are in a hand
