@@ -2,7 +2,7 @@
 This module holds the Deck class.
 """
 from random import shuffle
-from typing import Optional
+from typing import List, Optional
 
 from blackjack.card import Card
 
@@ -74,7 +74,7 @@ class Deck:
         Deck.card_values["Ace"] = 1
 
     @property
-    def cards(self) -> [Card]:
+    def cards(self) -> List[Card]:
         """
         Gets the deck of cards.
 
