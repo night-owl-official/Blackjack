@@ -33,3 +33,14 @@ if __name__ == "__main__":
     tokens = blackjack.init_currency()
     p_hand = blackjack.init_hand(main_deck)
     d_hand = blackjack.init_hand(main_deck)
+    
+    # Flag to decide whether to play another round after a loss
+    play_again = True
+    
+    # The game keeps running until the user doesn't want to play anymore
+    while play_again:
+        # Introduces the user to the game
+        print("\n\n*** WELCOME TO BLACKJACK!! ***\n")
+        
+        # Sets the flag to keep playing or not
+        play_again = ask_play_again()
