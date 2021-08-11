@@ -105,6 +105,9 @@ class Deck:
             The list of 52 cards in the deck.
         """
 
+        # Clear out the list of cards before initializing deck
+        self._cards.clear()
+
         # Runs a nested loop to add all the ranks for all the suits.
         for suit in Deck.card_suits:
             for rank in Deck.card_ranks:
