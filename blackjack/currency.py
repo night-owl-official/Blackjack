@@ -87,3 +87,14 @@ class Currency:
 
         self._total_tokens -= self._tokens_bet
         self.reset_bet()
+
+    def reset(self, initial_amt: int):
+        """
+        Resets the currency object to default state
+
+        Parameters:
+            initial_amt (int): The starting currency
+        """
+
+        self._total_tokens = initial_amt
+        self._tokens_bet = 0
