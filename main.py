@@ -39,6 +39,19 @@ def check_for_blackjack(hand_of_cards) -> bool:
     return blackjack.count_points(hand_of_cards) == 21
 
 
+def check_for_bust(hand_of_cards) -> bool:
+    """Checks if a hand has busted or not
+
+    Args:
+        hand_of_cards (Hand): The hand of cards to check
+
+    Returns:
+        bool: True if busted, false otherwise
+    """
+    
+    return blackjack.count_points(hand_of_cards) > 21
+
+
 if __name__ == "__main__":
     
     # Essential game components
