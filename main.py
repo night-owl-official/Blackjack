@@ -24,6 +24,19 @@ def ask_play_again() -> bool:
         # This only gets here in case of the user entering an invalid choice
         # and gives them a suggestion regarding what to enter
         print("* You need to enter one of the following: y/yes, n/no *\n")
+        
+
+def check_for_blackjack(hand_of_cards) -> bool:
+    """Checks if a hand has a blackjack or not
+
+    Args:
+        hand_of_cards (Hand): The hand of cards to check
+
+    Returns:
+        bool: True if there's a blackjack, false otherwise
+    """
+    
+    return blackjack.count_points(hand_of_cards) == 21
 
 
 if __name__ == "__main__":
