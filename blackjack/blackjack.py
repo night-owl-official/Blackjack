@@ -2,6 +2,8 @@
 This module contains all the functions necessary for the correct
 functioning of the blackjack game.
 """
+from collections import Sequence
+
 from blackjack.currency import Currency
 from blackjack.deck import Deck
 from blackjack.hand import Hand
@@ -219,3 +221,28 @@ def count_points(hand: Hand) -> int:
                 total_points += Deck.card_values["Ace"]
 
     return total_points
+
+
+def reset_game(deck: Deck, hands: Sequence[Hand], currency: Currency, initial_currency=1000):
+    """
+    Sets the deck, hands and currency to their initial state
+
+    Parameters:
+        deck (Deck): The deck of cards
+        hands (Sequence[Hand]): All the hands in the game
+        currency (Currency): The tokens used by the player
+        initial_currency (int): The amount of tokens the player has at the start
+    """
+
+    # Reset currency
+    currency.reset(initial_currency)
+
+    # Reset deck
+    deck.init_deck()
+    deck.shuffle()
+
+    # Reset hands
+    for hand in list(hands):
+        hand.clear()
+        hand.hit(deck.deal_card())
+        hand.hit(deck.deal_card())
