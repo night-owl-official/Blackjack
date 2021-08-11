@@ -78,7 +78,7 @@ def ask_bet(currency: Currency):
         break
 
 
-def ask_hit_or_stay(hand: Hand, deck: Deck) -> str:
+def ask_hit_or_stay(hand: Hand, deck: Deck) -> bool:
     """
     Asks the player whether they want to be hit or stay
 
@@ -87,7 +87,7 @@ def ask_hit_or_stay(hand: Hand, deck: Deck) -> str:
         deck (Deck): The deck of cards
 
     Returns:
-        The player's choice (hit or stay)
+        The player's choice (hit/true or stay/false)
     """
 
     # This loop will run until the user enters a valid choice
@@ -116,7 +116,7 @@ def ask_hit_or_stay(hand: Hand, deck: Deck) -> str:
                 print(f"You got {new_card}!\n")
                 print("This is your hand:")
                 print(f"{hand}\n")
-                return 'h'
+                return True
             else:
                 print("* The deck has no more cards left! *\n")
                 break
@@ -124,7 +124,7 @@ def ask_hit_or_stay(hand: Hand, deck: Deck) -> str:
             # Prints a newline just for neater output
             # and returns the choice
             print()
-            return 's'
+            return False
 
         # The user entered some invalid input and is advised to enter the correct one
         print("* You need to enter one of the following: h/hit, s/stay *\n")
