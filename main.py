@@ -42,5 +42,8 @@ if __name__ == "__main__":
         # Introduces the user to the game
         print("\n\n*** WELCOME TO BLACKJACK!! ***\n")
         
+        # Asks the user how many tokens to bet     
+        blackjack.ask_bet(tokens)
+        
         # Sets the flag to keep playing or not
         play_again = ask_play_again()
