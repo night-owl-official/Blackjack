@@ -92,12 +92,13 @@ def ask_hit_or_stay(hand: Hand, deck: Deck) -> bool:
         The player's choice (hit/true or stay/false)
     """
 
+    # Show the user their hand
+    print("This is your hand:")
+    print(f"{hand}\n")
+
     # This loop will run until the user enters a valid choice
     while True:
-        # Asks the user if they want to hit or stay,
-        # showing them their hand to help decide
-        print("This is your hand:")
-        print(f"{hand}\n")
+        # Asks the user if they want to hit or stay
         p_choice = input("Hit or Stay? (h/s) ").lower()
 
         # The user wants to hit
