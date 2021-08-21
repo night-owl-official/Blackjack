@@ -79,6 +79,13 @@ class Currency:
 
         self._total_tokens += self._tokens_bet
         self.reset_bet()
+        
+    def cash_in_half(self):
+        """Adds to the total tokens based on half of the player's bet
+        """
+        
+        self._total_tokens += self._tokens_bet // 2
+        self.reset_bet()
 
     def cash_out(self):
         """
