@@ -63,13 +63,190 @@ if __name__ == "__main__":
     # Flag to decide whether to play another round after a loss
     play_again = True
     
+    p_has_busted = False
+    p_has_blackjack = False
+    both_have_blackjack = False
+    
     # The game keeps running until the user doesn't want to play anymore
     while play_again:
-        # Introduces the user to the game
-        print("\n\n*** WELCOME TO BLACKJACK!! ***\n")
-        
         # Asks the user how many tokens to bet     
         blackjack.ask_bet(tokens)
         
+        # The player might have a blackjack in their first hand
+        if check_for_blackjack(p_hand):
+            # Flags player blackjack
+            p_has_blackjack = True
+            
+            # Dealer can at least try to tie the score if they have a blackjack
+            blackjack.dealer_hit_or_stay(d_hand, main_deck)
+            
+            # Dealer's blackjack?
+            if check_for_blackjack(d_hand):
+                # Flags dealer's blackjack
+                both_have_blackjack = True
+                
+                # Prints message announcing it's a draw
+                print("You and the dealer both have a blackjack!")
+                print("It's a draw!\n")
+                
+                # Player cashes in half the bet
+                tokens.cash_in_half()
+                
+                # Both hands are reset to start next turn
+                blackjack.reset_turn([p_hand, d_hand], main_deck)
+                
+            else:
+                # Dealer didn't have a blackjack, therefore player wins
+                # Prints a message showing that
+                print("You have a blackjack!")
+                print("You won the turn!\n")
+                
+                # Player cashes in the full bet
+                tokens.cash_in()
+                
+                # Both hands are reset to start next turn
+                blackjack.reset_turn([p_hand, d_hand], main_deck)
+            
+            # Skips the remaining logic in the loop since the game has been decided already
+            continue
+        else:
+            # Keeps asking the player if they want to get hit until they refuse
+            while blackjack.ask_hit_or_stay(p_hand, main_deck):
+                # Player might have a blackjack
+                if check_for_blackjack(p_hand):
+                    # Flags the player's blackjack
+                    p_has_blackjack = True
+                    
+                    # Dealer tries to respond with a blackjack of their own
+                    blackjack.dealer_hit_or_stay(d_hand, main_deck)
+                    
+                    # Checks if the dealer has that blackjack
+                    if check_for_blackjack(d_hand):
+                        # Flags that both the player and the dealer have a blackjack
+                        both_have_blackjack = True
+                        
+                        # Prints a message showing that they both have a blackjack
+                        print("You and the dealer both have a blackjack!")
+                        print("It's a draw!\n")
+                        
+                        # Shares the bet between the dealer and the player
+                        tokens.cash_in_half()
+                        
+                        # Resets both hands to start the next turn
+                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                        
+                    else:
+                        # Only the player has the blackjack
+                        # Shows a message announcing that fact
+                        print("You have a blackjack!")
+                        print("You won the turn!\n")
+                        
+                        # Player cashes in the full bet
+                        tokens.cash_in()
+                        
+                        # Both hands are reset to start the next turn
+                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                    
+                    # Breaks out of the loop since somebody had a blackjack
+                    # No need to keep asking the player if they want to get hit
+                    break    
+                elif check_for_bust(p_hand):
+                    # Player might have busted
+                    
+                    # Flags the player has busted
+                    p_has_busted = True
+                    
+                    # Prints a message showing that
+                    print("You busted!\n")
+                    
+                    # Player loses their bet
+                    tokens.cash_out()
+                    
+                    # Both hands are reset to start the next turn
+                    blackjack.reset_turn([p_hand, d_hand], main_deck)
+                    
+                    # Breaks out of the loop since the player has busted
+                    break
+            
+            # Dealer will hit their hand if no blackjack or bust occurred
+            if not (p_has_blackjack or both_have_blackjack or p_has_busted):
+                # Dealer hits their hand
+                blackjack.dealer_hit_or_stay(d_hand, main_deck)
+                
+                # Dealer might have busted
+                if check_for_bust(d_hand):
+                    # Prints a message showing the dealer has busted
+                    print("The dealer busted!")
+                    print("You won the turn!\n")
+                    
+                    # Player cashes in the bet
+                    tokens.cash_in()
+                    
+                    # Resets both hands to start next turn
+                    blackjack.reset_turn([p_hand, d_hand], main_deck)
+                else:
+                    # Get the player's and dealer's score
+                    p_score = blackjack.count_points(p_hand)
+                    d_score = blackjack.count_points(d_hand)
+                    
+                    # Compares player's and dealer's score
+                    if p_score > d_score:
+                        # Player has a higher score
+                        print(f"You won {p_score} to {d_score}!\n")
+                        
+                        # Player cashes in the full bet
+                        tokens.cash_in()
+                        
+                        # Both hands are reset to start the next turn
+                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                    elif p_score < d_score:
+                        # Player has a lower score
+                        print(f"You lost {d_score} to {p_score}!\n")
+                        
+                        # Player loses their full bet
+                        tokens.cash_out()
+                        
+                        # Both hands are reset to start next turn
+                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                    else:
+                        # It's a draw
+                        print(f"You tied {p_score} to {d_score}!\n")
+                        
+                        # Splits the bet
+                        tokens.cash_in_half()
+                        
+                        # Both hands are reset to start next turn
+                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                        
+            # Resets all flags
+            p_has_blackjack = False
+            both_have_blackjack = False
+            p_has_busted = False
+                        
+            # No more tokens left means the player
+            # has lost their game
+            if tokens.total_tokens > 0:
+                continue
+            else:
+                print("You're out of tokens!\n")
+                
+            # When the deck of cards is empty, it gets refilled
+            if len(main_deck.cards) == 0:
+                main_deck.init_deck()
+                main_deck.shuffle()
+                
         # Sets the flag to keep playing or not
         play_again = ask_play_again()
+        
+        # The user wants to play again
+        if play_again:
+            # All game flags are reset
+            p_has_blackjack = False
+            both_have_blackjack = False
+            p_has_busted = False
+            
+            # The game is reset to initial state
+            blackjack.reset_game(main_deck, [p_hand, d_hand], tokens)
+            
+            # Introduces the user to the game
+            print("\n\n*** WELCOME TO BLACKJACK!! ***\n")
