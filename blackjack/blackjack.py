@@ -246,3 +246,19 @@ def reset_game(deck: Deck, hands: Sequence[Hand], currency: Currency, initial_cu
         hand.clear()
         hand.hit(deck.deal_card())
         hand.hit(deck.deal_card())
+        
+
+def reset_turn(hands: Sequence[Hand], deck: Deck):
+    """
+    Clears the player's and dealer's hands and gives them new cards
+    
+    Parameters:
+        hands (Sequence[Hands]): The player's and dealer's hands
+        deck (Deck): The deck of cards
+    """
+    
+    # Reset hands
+    for hand in list(hands):
+        hand.clear()
+        hand.hit(deck.deal_card())
+        hand.hit(deck.deal_card())
