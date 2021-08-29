@@ -1,5 +1,17 @@
 from blackjack import blackjack
 
+# Essential game components
+main_deck = blackjack.init_deck()
+tokens = blackjack.init_currency()
+p_hand = blackjack.init_hand(main_deck)
+d_hand = blackjack.init_hand(main_deck)
+
+# Flag to decide whether to play another round after a loss
+play_again = True
+
+p_has_busted = False
+p_has_blackjack = False
+both_have_blackjack = False
 
 def ask_play_again() -> bool:
     """Asks the user whether they want to play another round
@@ -52,21 +64,7 @@ def check_for_bust(hand_of_cards) -> bool:
     return blackjack.count_points(hand_of_cards) > 21
 
 
-if __name__ == "__main__":
-    
-    # Essential game components
-    main_deck = blackjack.init_deck()
-    tokens = blackjack.init_currency()
-    p_hand = blackjack.init_hand(main_deck)
-    d_hand = blackjack.init_hand(main_deck)
-    
-    # Flag to decide whether to play another round after a loss
-    play_again = True
-    
-    p_has_busted = False
-    p_has_blackjack = False
-    both_have_blackjack = False
-    
+if __name__ == "__main__":    
     # The game keeps running until the user doesn't want to play anymore
     while play_again:
         # Asks the user how many tokens to bet     
