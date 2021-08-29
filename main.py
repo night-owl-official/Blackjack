@@ -64,6 +64,21 @@ def check_for_bust(hand_of_cards) -> bool:
     return blackjack.count_points(hand_of_cards) > 21
 
 
+def reset_flags():
+    """Resets all the game flags to default state
+    """
+    
+    # Use the variables declared in the scope of the module
+    global p_has_busted
+    global p_has_blackjack
+    global both_have_blackjack
+    
+    # Reset them
+    p_has_busted = False
+    p_has_blackjack = False
+    both_have_blackjack = False
+
+
 if __name__ == "__main__":    
     # The game keeps running until the user doesn't want to play anymore
     while play_again:
@@ -217,9 +232,7 @@ if __name__ == "__main__":
                         blackjack.reset_turn([p_hand, d_hand], main_deck)
                         
             # Resets all flags
-            p_has_blackjack = False
-            both_have_blackjack = False
-            p_has_busted = False
+            reset_flags()
                         
             # No more tokens left means the player
             # has lost their game
@@ -239,9 +252,7 @@ if __name__ == "__main__":
         # The user wants to play again
         if play_again:
             # All game flags are reset
-            p_has_blackjack = False
-            both_have_blackjack = False
-            p_has_busted = False
+            reset_flags()
             
             # The game is reset to initial state
             blackjack.reset_game(main_deck, [p_hand, d_hand], tokens)
