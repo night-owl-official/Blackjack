@@ -73,6 +73,17 @@ def player_wins():
     
     # Both hands are reset to start next turn
     blackjack.reset_turn([p_hand, d_hand], main_deck)
+    
+    
+def player_loses():
+    """Withdraws the tokens and resets the hands
+    """
+    
+    # Player loses their bet
+    tokens.cash_out()
+    
+    # Both hands are reset to start the next turn
+    blackjack.reset_turn([p_hand, d_hand], main_deck)
 
 
 def handle_possible_blackjack_draw():
@@ -164,11 +175,8 @@ if __name__ == "__main__":
                     # Prints a message showing that
                     print("You busted!\n")
                     
-                    # Player loses their bet
-                    tokens.cash_out()
-                    
-                    # Both hands are reset to start the next turn
-                    blackjack.reset_turn([p_hand, d_hand], main_deck)
+                    # Loses tokens and resets hands
+                    player_loses()
                     
                     # Breaks out of the loop since the player has busted
                     break
@@ -202,11 +210,8 @@ if __name__ == "__main__":
                         # Player has a lower score
                         print(f"You lost {d_score} to {p_score}!\n")
                         
-                        # Player loses their full bet
-                        tokens.cash_out()
-                        
-                        # Both hands are reset to start next turn
-                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                        # Loses tokens and resets hands
+                        player_loses()
                     else:
                         # It's a draw
                         print(f"You tied {p_score} to {d_score}!\n")
