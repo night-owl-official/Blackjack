@@ -64,6 +64,50 @@ def check_for_bust(hand_of_cards) -> bool:
     return blackjack.count_points(hand_of_cards) > 21
 
 
+def handle_possible_blackjack_draw():
+    """Holds the logic that checks for a blackjack
+    in the current dealer's hand and if it finds it
+    then it will be a blackjack draw
+    """
+    
+    # Use module scoped flags
+    global p_has_blackjack
+    global both_have_blackjack
+    
+    # Flags player blackjack
+    p_has_blackjack = True
+    
+    # Dealer can at least try to tie the score if they have a blackjack
+    blackjack.dealer_hit_or_stay(d_hand, main_deck)
+    
+    # Dealer's blackjack?
+    if check_for_blackjack(d_hand):
+        # Flags dealer's blackjack
+        both_have_blackjack = True
+        
+        # Prints message announcing it's a draw
+        print("You and the dealer both have a blackjack!")
+        print("It's a draw!\n")
+        
+        # Player cashes in half the bet
+        tokens.cash_in_half()
+        
+        # Both hands are reset to start next turn
+        blackjack.reset_turn([p_hand, d_hand], main_deck)
+        
+    else:
+        # Dealer didn't have a blackjack, therefore player wins
+        # Prints a message showing that
+        print("You have a blackjack!")
+        print("You won the turn!\n")
+        
+        # Player cashes in the full bet
+        tokens.cash_in()
+        
+        # Both hands are reset to start next turn
+        blackjack.reset_turn([p_hand, d_hand], main_deck)
+
+
 def reset_flags():
     """Resets all the game flags to default state
     """
@@ -87,38 +131,8 @@ if __name__ == "__main__":
         
         # The player might have a blackjack in their first hand
         if check_for_blackjack(p_hand):
-            # Flags player blackjack
-            p_has_blackjack = True
-            
-            # Dealer can at least try to tie the score if they have a blackjack
-            blackjack.dealer_hit_or_stay(d_hand, main_deck)
-            
-            # Dealer's blackjack?
-            if check_for_blackjack(d_hand):
-                # Flags dealer's blackjack
-                both_have_blackjack = True
-                
-                # Prints message announcing it's a draw
-                print("You and the dealer both have a blackjack!")
-                print("It's a draw!\n")
-                
-                # Player cashes in half the bet
-                tokens.cash_in_half()
-                
-                # Both hands are reset to start next turn
-                blackjack.reset_turn([p_hand, d_hand], main_deck)
-                
-            else:
-                # Dealer didn't have a blackjack, therefore player wins
-                # Prints a message showing that
-                print("You have a blackjack!")
-                print("You won the turn!\n")
-                
-                # Player cashes in the full bet
-                tokens.cash_in()
-                
-                # Both hands are reset to start next turn
-                blackjack.reset_turn([p_hand, d_hand], main_deck)
+            # The dealer might also have a blackjack
+            handle_possible_blackjack_draw()
             
             # Skips the remaining logic in the loop since the game has been decided already
             continue
@@ -127,38 +141,8 @@ if __name__ == "__main__":
             while blackjack.ask_hit_or_stay(p_hand, main_deck):
                 # Player might have a blackjack
                 if check_for_blackjack(p_hand):
-                    # Flags the player's blackjack
-                    p_has_blackjack = True
-                    
-                    # Dealer tries to respond with a blackjack of their own
-                    blackjack.dealer_hit_or_stay(d_hand, main_deck)
-                    
-                    # Checks if the dealer has that blackjack
-                    if check_for_blackjack(d_hand):
-                        # Flags that both the player and the dealer have a blackjack
-                        both_have_blackjack = True
-                        
-                        # Prints a message showing that they both have a blackjack
-                        print("You and the dealer both have a blackjack!")
-                        print("It's a draw!\n")
-                        
-                        # Shares the bet between the dealer and the player
-                        tokens.cash_in_half()
-                        
-                        # Resets both hands to start the next turn
-                        blackjack.reset_turn([p_hand, d_hand], main_deck)
-                        
-                    else:
-                        # Only the player has the blackjack
-                        # Shows a message announcing that fact
-                        print("You have a blackjack!")
-                        print("You won the turn!\n")
-                        
-                        # Player cashes in the full bet
-                        tokens.cash_in()
-                        
-                        # Both hands are reset to start the next turn
-                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                    # The dealer might also have a blackjack
+                    handle_possible_blackjack_draw()
                     
                     # Breaks out of the loop since somebody had a blackjack
                     # No need to keep asking the player if they want to get hit
