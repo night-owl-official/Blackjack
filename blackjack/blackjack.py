@@ -72,6 +72,12 @@ def ask_bet(currency: Currency):
         if not p_choice.isdigit():
             print("* You need to enter a number! *\n")
             continue
+        
+        # Checks if the bet is at least 100 and if it isn't
+        # then it's not a valid bet
+        if int(p_choice) < 100:
+            print("* The minimum bet is 100! *\n")
+            continue
 
         # Places the bet as integer, displaying the bet to the console
         # and ends the loop
