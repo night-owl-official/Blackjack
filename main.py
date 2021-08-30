@@ -84,6 +84,17 @@ def player_loses():
     
     # Both hands are reset to start the next turn
     blackjack.reset_turn([p_hand, d_hand], main_deck)
+    
+    
+def player_draws():
+    """Cashes in half of the initial bet and resets the hands
+    """
+
+    # Splits the bet
+    tokens.cash_in_half()
+    
+    # Both hands are reset to start next turn
+    blackjack.reset_turn([p_hand, d_hand], main_deck)
 
 
 def handle_possible_blackjack_draw():
@@ -111,11 +122,8 @@ def handle_possible_blackjack_draw():
         print("You and the dealer both have a blackjack!")
         print("It's a draw!\n")
         
-        # Player cashes in half the bet
-        tokens.cash_in_half()
-        
-        # Both hands are reset to start next turn
-        blackjack.reset_turn([p_hand, d_hand], main_deck)
+        # Cashes in half the bet and resets the hands
+        player_draws()
         
     else:
         # Dealer didn't have a blackjack, therefore player wins
@@ -216,11 +224,8 @@ if __name__ == "__main__":
                         # It's a draw
                         print(f"You tied {p_score} to {d_score}!\n")
                         
-                        # Splits the bet
-                        tokens.cash_in_half()
-                        
-                        # Both hands are reset to start next turn
-                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                        # Cashes in half the bet and resets the hands
+                        player_draws()
                         
             # Resets all flags
             reset_flags()
