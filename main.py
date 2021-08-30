@@ -64,6 +64,17 @@ def check_for_bust(hand_of_cards) -> bool:
     return blackjack.count_points(hand_of_cards) > 21
 
 
+def player_wins():
+    """Earns the tokens and resets the hands
+    """
+    
+    # Player cashes in the full bet
+    tokens.cash_in()
+    
+    # Both hands are reset to start next turn
+    blackjack.reset_turn([p_hand, d_hand], main_deck)
+
+
 def handle_possible_blackjack_draw():
     """Holds the logic that checks for a blackjack
     in the current dealer's hand and if it finds it
@@ -101,11 +112,8 @@ def handle_possible_blackjack_draw():
         print("You have a blackjack!")
         print("You won the turn!\n")
         
-        # Player cashes in the full bet
-        tokens.cash_in()
-        
-        # Both hands are reset to start next turn
-        blackjack.reset_turn([p_hand, d_hand], main_deck)
+        # Cashes in the price and resets hands
+        player_wins()
 
 
 def reset_flags():
@@ -176,11 +184,8 @@ if __name__ == "__main__":
                     print("The dealer busted!")
                     print("You won the turn!\n")
                     
-                    # Player cashes in the bet
-                    tokens.cash_in()
-                    
-                    # Resets both hands to start next turn
-                    blackjack.reset_turn([p_hand, d_hand], main_deck)
+                    # Cashes in the price and resets the hands
+                    player_wins()
                 else:
                     # Get the player's and dealer's score
                     p_score = blackjack.count_points(p_hand)
@@ -191,11 +196,8 @@ if __name__ == "__main__":
                         # Player has a higher score
                         print(f"You won {p_score} to {d_score}!\n")
                         
-                        # Player cashes in the full bet
-                        tokens.cash_in()
-                        
-                        # Both hands are reset to start the next turn
-                        blackjack.reset_turn([p_hand, d_hand], main_deck)
+                        # Cashes in the price and resets hands
+                        player_wins()
                     elif p_score < d_score:
                         # Player has a lower score
                         print(f"You lost {d_score} to {p_score}!\n")
